@@ -1,4 +1,6 @@
 import { useState } from "react"
+import Nav from "./Nav"
+import { useNavigate } from "react-router-dom"
 
 
 export default function Home(){
@@ -7,13 +9,26 @@ export default function Home(){
 let[busname,setbusname]=useState("")
 let[boardingpoint,setboardingpoint]=useState("")
 let[destination,setdestination]=useState("")
+let Navigate=useNavigate()
+
+function getbyname(){
+    if(busname===""){
+        alert("you must enter the bus name")
+        return;
+    }
+    Navigate(`/bus/:${busname}/:/:`)
+
+
+}
 
     return(
+        
         <div className="homeouter">
+            <Nav/>
             <div className="homebusname">
                 <label htmlFor="name">Enter the bus name</label>
                  <input placeholder="enter the Busname" value={busname} id="name" onChange={(e)=>setbusname(e.target.value)}/>
-                 <button onClick={()=>alert("this function yet to be implemented")}>Search</button>
+                 <button onClick={getbyname}>Search</button>
             </div>
 
             <div className="homebusroute">

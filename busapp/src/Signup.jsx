@@ -1,4 +1,6 @@
 import { useState } from "react"
+import axios from 'axios'
+import {useNavigate} from 'react-router-dom'
 
 
 export function Signup(){
@@ -9,6 +11,7 @@ let[formerr,setformerr]=useState({
 })
 let initialdata=   {username:"",
     mobile:"",
+    password:"",
     email:"",
     gender:"",
     age:"",
@@ -16,46 +19,44 @@ let initialdata=   {username:"",
     pincode:"",
 }
 let[userdata,setuserdata]=useState(initialdata)
+let Navigate=useNavigate()
 
 
 let states=["tamilnadu","karnataka","Kerala","Maharastra","Puducherry","Delhi"];
 
 function handlechange(e){
     let name=e.target.name;
+    let value=e.target.value.trim()
+    setuserdata({...userdata,[name]:value});
     
-    if(name==="password"||name==="mobile"){
-        let err=validate(e.target.value,name);
-        if(err!=""){
-            setformerr({...formerr,[name]:err});
-        
-            setuserdata({...userdata,[name]:e.target.value})}
-            else{
-                setuserdata({...userdata,[name]:e.target.value})
-                setformerr({mobile:"",email:""})
-            }
-        
-    }
-    else{
-        let value=e.target.value.trim()
-        setuserdata({...userdata,[name]:value});
-    }
 
 }
-function validate(value,name){
-    if(name==="password"){
-        return value.length >6?"":"password must be greater than 6 digits"
-    }
-    return value.length < 10 ?"":"enter the correct mobile number"
-}
-function handlesubmit(e){
+
+async function handlesubmit(e){
     e.preventDefault();
-    let signup=Object.values(formerr).some(val=>val)
-    if(signup){
-        alert(formerr.mobile ,formerr.password)
+    if(String(userdata.mobile).length!=10){
+        alert("enter correct mobile number")
+        setuserdata({...userdata,mobile:""})
         return;
     }
-    alert("signup done")
+    if(userdata.password.length<6){
+        alert("password must be greater than 6 digits")
+        setuserdata({...userdata,password:""})
+        return;
+
+    }
+    
+    try{
+    let verify=await axios.post("http://localhost:8080/User/signup",userdata)
     setuserdata(initialdata)
+    console.log(verify.data);
+    alert("signup done")
+    Navigate('/login')
+}
+catch(err){
+    console.log(err.response.data);
+    console.log("something err..");
+}
 }
     return(
         <div className="signupform">
@@ -67,17 +68,20 @@ function handlesubmit(e){
 
                 <div className="mobile">
                 <label htmlFor="mobile">Enter you mobile number</label>
-                <input name="mobile" id="username" placeholder="enter your mobile number" type="text" value={userdata.mobile} onChange={handlechange} required maxLength={10}/>
+                <input name="mobile" id="username"  placeholder="enter your mobile number" type="number" value={userdata.mobile} onChange={handlechange} required maxLength={10}/>
                 </div>
 
                 <div className="email">
-                <label htmlFor="mobile">Enter your email</label>
-                <input name="email" id="username" placeholder="enter the email" type="email" value={userdata.email} onChange={handlechange} required />
+                <label htmlFor="email">Enter your email</label>
+                <input name="email" id="username"  placeholder="enter the email" type="email" value={userdata.email} onChange={handlechange} required />
                 </div>
 
                 <div className="Password">
                 <label htmlFor="password">Enter the password</label>
-                <input name="password" id="password" placeholder="enter your password" type="password" value={userdata.password} onChange={handlechange} required/>
+                <input name="password" id="password"  placeholder="enter your password" type="password" value={userdata.password} onChange={handlechange} required/>
+                {userdata.password.length > 0 && userdata.password.length <= 6 && (
+  <span style={{ color: 'red' }}>Password must be more than 6 characters</span>
+)}
                 </div>
 
                 <div className="age">

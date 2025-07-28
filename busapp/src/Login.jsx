@@ -1,4 +1,8 @@
 import { useState } from "react"
+import {useDispatch} from 'react-redux'
+import axios from 'axios'
+import { LoginMe } from "./Actions/Loginaction"
+import {useNavigate} from 'react-router-dom'
 
 
 export default function Login(){
@@ -6,6 +10,9 @@ export default function Login(){
     let initialdata={user:"",password:""}
     let[formdata,setformdata]=useState(initialdata)
     let[formerr,setformerr]=useState("")
+    let dispatch=useDispatch();
+    let Navigate=useNavigate();
+    
 
     function handlechange(e){
 
@@ -13,7 +20,7 @@ export default function Login(){
         setformdata({...formdata,[name]:value.trim()})
         
     }
-    function handlesubmit(e){
+    async function handlesubmit(e){
         e.preventDefault();
         let login=convert(formdata)
         if(!login){
@@ -21,6 +28,21 @@ export default function Login(){
         }
         setformerr("");
         alert("logined")
+        console.log(login);
+        try{
+            const verify=await axios.post("http://localhost:8080/User/login",login);
+            
+                console.log("you are logged in...");
+                console.log(verify.data);
+                dispatch(LoginMe(true,verify.data));
+                Navigate('/')
+
+
+        }
+        catch(err){
+            console.log(err.response.data);
+        }
+
 
     }
 
