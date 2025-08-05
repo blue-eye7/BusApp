@@ -5,7 +5,13 @@ const LoginReducer=(state={authed:false,userdata:{}},action)=>{
         default :return state;
     }
 }
+const Busreducers=(state={busdata:{}},action)=>{
+    switch(action.type){
+        case "busdata":return {busdata:action.busdata};
+        default:return state;
+    }
+}
 
 export const rootreducer=combineReducers({
-    LoginReducer,
+    LoginReducer,Busreducers
 })

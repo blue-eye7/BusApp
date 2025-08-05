@@ -1,0 +1,89 @@
+.bus {
+  display: flex;
+  flex-wrap: wrap;
+  width: 450px; /* wider to make gap look good */
+  margin: 20px auto;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.seat {
+  width: 15%;
+  padding: 4px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+/* Create aisle after 2 seats (in each set of 5) */
+.gap {
+  margin-left: 50px;
+}
+
+.seatBtn {
+  width: 100%;
+  padding: 12px;
+  background-color:rgb(56, 100, 243);
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 6px;
+  /* transition: background 0.3s; */
+}
+
+/* .seatBtn:hover:not(.booked) {
+  background-color:yellow;
+} */
+
+.booked {
+  background-color: red;
+  cursor: not-allowed;
+ 
+}
+.booked:hover {
+  background-color: red;
+}
+.selected{
+    background-color: gray; 
+}
+
+.summary {
+  position: fixed;
+  top: 30px;
+  right: -400px;      /* offscreen */
+  width: 400px;
+  color: black;
+  height: 90vh;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+  padding: 20px;
+  transition: right 0.4s ease;
+  z-index: 100;
+  margin-top: 30px;
+}
+
+.show {
+  right: 0;          /* slide inside */
+}
+.passenger div{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.bookbtn{
+  width: 100%;
+  padding: 12px;
+  background-color:red;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 6px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.journey{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

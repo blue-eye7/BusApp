@@ -1,0 +1,65 @@
+.routes-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.route-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.route-card:hover {
+  transform: translateY(-5px);
+}
+
+.route-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2a2a2a;
+  margin-bottom: 10px;
+}
+
+.route-detail {
+  color: #555;
+  margin: 4px 0;
+}
+
+.route-stops {
+  background-color: #f9f9f9;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.route-stops h3 {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #444;
+}
+
+.route-stops ol {
+  margin: 0;
+  padding-left: 20px;
+  color: black;
+}
+
+.add-route-button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-route-button:hover {
+  background-color: #357acb;
+}
